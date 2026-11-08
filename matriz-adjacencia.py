@@ -2,7 +2,6 @@ def criar_grafo():
    matriz = []
    vertices = []
    return matriz, vertices
-pass
 
 def inserir_vertice(matriz, vertices, vertice):
   if vertice not in vertices:
@@ -11,8 +10,6 @@ def inserir_vertice(matriz, vertices, vertice):
     linha.append(0)
   nova_linha = [0] * len(vertices)
   matriz.append(nova_linha)
- 
-pass
 
 def inserir_aresta(matriz, vertices, origem, destino, nao_direcionado=False):
     if origem not in vertices:
@@ -26,7 +23,6 @@ def inserir_aresta(matriz, vertices, origem, destino, nao_direcionado=False):
     matriz[i][j] = 1
     if nao_direcionado:
         matriz [j][i] = 1
-pass
 
 def remover_vertice(matriz, vertices, vertice):
     if vertice in vertices:
@@ -35,7 +31,6 @@ def remover_vertice(matriz, vertices, vertice):
         matriz.pop(indice)
         for linha in matriz:
             linha.pop(indice)
-pass
 
 def remover_aresta(matriz, vertices, origem, destino, nao_direcionado=False):
     if origem in vertices and destino in vertices:
@@ -46,7 +41,6 @@ def remover_aresta(matriz, vertices, origem, destino, nao_direcionado=False):
      matriz[i][j] = 0
      if nao_direcionado:
             matriz [j][i] = 0
-pass
 
 def existe_aresta(matriz, vertices, origem, destino):
     if origem not in vertices or destino not in vertices:
@@ -54,15 +48,10 @@ def existe_aresta(matriz, vertices, origem, destino):
     i = vertices.index(origem)
     j = vertices.index(destino)
 
-
-
-
     if matriz[i][j] == 1:
         return True
     else:
         return False
-   
-pass
 
 def vizinhos(matriz, vertices, vertice):
    
@@ -76,30 +65,19 @@ def vizinhos(matriz, vertices, vertice):
         if valor == 1:
             lista_vizinhos.append(vertices[j])
 
-
-
-
     return lista_vizinhos
-       
-pass
-
 
 def grau_vertices(matriz, vertices):
     graus = {}
    
-   
     for i, vertice in enumerate(vertices):
        
-       
         grau_saida = sum(matriz[i])
-       
-       
+            
         grau_entrada = sum(linha[i] for linha in matriz)
-       
-       
+            
         grau_total = grau_saida + grau_entrada
-       
-       
+             
         graus[vertice] = {
             "saida": grau_saida,
             "entrada": grau_entrada,
@@ -107,9 +85,6 @@ def grau_vertices(matriz, vertices):
         }
    
     return graus
-   
-   
-pass
 
 def percurso_valido(matriz, vertices, caminho):
     for i in range(len(caminho) - 1):
@@ -122,8 +97,6 @@ def percurso_valido(matriz, vertices, caminho):
             return False
            
     return True
-pass
-
 
 def listar_vizinhos(matriz, vertices, vertice):
    if vertice not in vertices:
@@ -131,8 +104,6 @@ def listar_vizinhos(matriz, vertices, vertice):
        return
    lista = vizinhos(matriz, vertices, vertice)
    print(f"Viinhos de {vertice}: {lista}")
-       
-pass
 
 def exibir_grafo(matriz, vertices):
     if not vertices:
@@ -144,11 +115,9 @@ def exibir_grafo(matriz, vertices):
     for i, linha in enumerate(matriz):
         valores_linha = " ".join(map(str, linha))
         print(f"{vertices[i]}  {valores_linha}")
-pass
 
 def main():
     matriz, vertices = criar_grafo()
-
 
     while True:
         print("\n--- MENU GRAFO (MATRIZ DE ADJACÊNCIA) ---")
@@ -246,17 +215,5 @@ def main():
             case _:
                 print("Opção inválida! Tente novamente.")
 
-
-
-
 if __name__ == "__main__":
     main()
-
-
-
-
-
-
-
-
-
