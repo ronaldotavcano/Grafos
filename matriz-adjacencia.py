@@ -109,11 +109,11 @@ def exibir_grafo(matriz, vertices):
     if not vertices:
         print("Grafo vazio")
         return
-    cabecalho = " " + " ".join(vertices)
+    cabecalho = " " + " " + " " + " ".join(vertices)
     print (cabecalho)
    
     for i, linha in enumerate(matriz):
-        valores_linha = " ".join(map(str, linha))
+        valores_linha =" ".join(map(str, linha))
         print(f"{vertices[i]}  {valores_linha}")
 
 def main():

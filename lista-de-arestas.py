@@ -66,7 +66,7 @@ def grau_vertices(vertices, arestas):
     return graus
 
 def percurso_valido(arestas, caminho):
-    if len(caminho) < 2:
+    if len(caminho) <= 1:
         return True
         
     for i in range(len(caminho) - 1):
