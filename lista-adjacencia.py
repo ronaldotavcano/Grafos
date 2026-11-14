@@ -1,3 +1,18 @@
+def bfs(grafo, vertice_inicial): 
+    if vertice_inicial not in grafo:
+        return []
+    fila = [vertice_inicial]
+    visitados = []
+
+    while len(fila) > 0:
+        vertice = fila.pop(0)
+        if vertice not in visitados:
+            visitados.append(vertice)
+
+        for vizinho in grafo.get(vertice, []): 
+            if vizinho not in fila and vizinho not in visitados:
+                fila.append(vizinho)
+    return visitados
 def criar_grafo():
     return {}
 
@@ -113,6 +128,7 @@ def main():
         print("7 - Verificar se aresta existe")
         print("8 - Mostrar grau dos vértices")
         print("9 - Verificar percurso")
+        print("10 - Busca em Largura (BFS)")
         print("0 - Sair")
         print("="*15)
         
@@ -171,6 +187,13 @@ def main():
                 print("O percurso é VÁLIDO.")
             else:
                 print("O percurso é INVÁLIDO.")
+        elif opcao == '10':
+            inicio = input("Digite o vértice inicial para iniciar o BFS: ")
+            if inicio not in grafo:
+                print(f"O vértice '{inicio}' não existe no grafo.")
+            else:
+                resultado = bfs(grafo, inicio)
+                print(f"Ordem de visitação (BFS): {' -> '.join(resultado)}")
                 
         elif opcao == '0':
             print("A encerrar o programa...")
