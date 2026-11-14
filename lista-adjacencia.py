@@ -13,6 +13,31 @@ def bfs(grafo, vertice_inicial):
             if vizinho not in fila and vizinho not in visitados:
                 fila.append(vizinho)
     return visitados
+
+def menor_caminho_bfs(grafo, inicio, destino):
+    if inicio not in grafo or destino not in grafo:
+        return []
+    
+    fila = [(inicio, [inicio])]
+    visitados = []
+
+    while len(fila) > 0:
+        vertice, caminho = fila.pop(0)
+        
+        if vertice == destino:
+            return caminho
+
+        if vertice not in visitados:
+            visitados.append(vertice)
+
+            for vizinho in grafo.get(vertice, []):
+                if vizinho not in visitados:
+                    novo_caminho = caminho + [vizinho]
+                    fila.append((vizinho, novo_caminho))
+                    
+    return []  
+
+
 def criar_grafo():
     return {}
 
@@ -129,6 +154,7 @@ def main():
         print("8 - Mostrar grau dos vértices")
         print("9 - Verificar percurso")
         print("10 - Busca em Largura (BFS)")
+        print("11 - Menor caminho com BFS")
         print("0 - Sair")
         print("="*15)
         
@@ -187,6 +213,7 @@ def main():
                 print("O percurso é VÁLIDO.")
             else:
                 print("O percurso é INVÁLIDO.")
+
         elif opcao == '10':
             inicio = input("Digite o vértice inicial para iniciar o BFS: ")
             if inicio not in grafo:
@@ -194,6 +221,19 @@ def main():
             else:
                 resultado = bfs(grafo, inicio)
                 print(f"Ordem de visitação (BFS): {' -> '.join(resultado)}")
+
+        elif opcao == '11':
+            inicio = input("Digite o vértice de origem: ")
+            destino = input("Digite o vértice de destino: ")
+            
+            if inicio not in grafo or destino not in grafo:
+                print("Um ou ambos os vértices não existem no grafo.")
+            else:
+                caminho = menor_caminho_bfs(grafo, inicio, destino)
+                if caminho:
+                    print(f"Menor caminho de {inicio} até {destino}: {' -> '.join(caminho)}")
+                else:
+                    print(f"Não existe caminho entre '{inicio}' e '{destino}'.")
                 
         elif opcao == '0':
             print("A encerrar o programa...")
