@@ -90,6 +90,49 @@ def exibir_grafo(vertices, arestas):
     for origem, destino in arestas:
         print(f"({origem} -> {destino})")
 
+def busca_profundidade(vertices, arestas, inicio):
+    if inicio not in vertices:
+        return []
+
+    pilha = [inicio]
+    visitados = []
+
+    while pilha:
+        atual = pilha.pop()          # LIFO: retira o último que entrou
+        visitados.append(atual)
+
+        for vizinho in vizinhos(vertices, arestas, atual):
+            if vizinho not in pilha and vizinho not in visitados:
+                pilha.append(vizinho)
+
+    return visitados
+
+def detectar_ciclo(vertices, arestas):
+    visitados = []
+
+    # percorre todos os componentes (o grafo pode ser desconexo)
+    for inicio in vertices:
+        if inicio in visitados:
+            continue
+
+        pilha = [{'vertice': inicio, 'pai': None}]
+
+        while pilha:
+            item = pilha.pop()
+            atual = item['vertice']
+            pai = item['pai']
+            visitados.append(atual)
+
+            for vizinho in vizinhos(vertices, arestas, atual):
+                na_pilha = any(i['vertice'] == vizinho for i in pilha)
+
+                if not na_pilha and vizinho not in visitados:
+                    pilha.append({'vertice': vizinho, 'pai': atual})
+                elif vizinho != pai:
+                    return True  # ciclo detectado
+
+    return False
+
 
 def main():
     vertices, arestas = criar_grafo()
@@ -104,6 +147,8 @@ def main():
         print("6 - Ver Graus dos Vértices")
         print("7 - Verificar Percurso Válido")
         print("8 - Exibir Grafo")
+        print("9 - Busca em Profundidade")
+        print("10 - Detectar Ciclo")
         print("0 - Sair")
         
         opcao = input("Escolha uma opção: ")
@@ -161,6 +206,19 @@ def main():
             case "0":
                 print("Saindo do programa...")
                 break
+
+            case "9":
+                inicio = input("Vértice inicial: ")
+                if inicio not in vertices:
+                    print("Vértice não existe.")
+                else:
+                    print("Ordem da DFS:", busca_profundidade(vertices, arestas, inicio))
+
+            case "10":
+                if detectar_ciclo(vertices, arestas):
+                    print("O grafo possui ciclo.")
+                else:
+                    print("Nenhum ciclo detectado.")
                 
             case _:
                 print("Opção inválida. Tente novamente.")

@@ -65,6 +65,31 @@ def bfs(grafo, vertice_inicial):
     return visitados
 
 
+def menor_caminho_bfs(grafo, inicio, destino):
+    if inicio not in grafo or destino not in grafo:
+        return []
+
+    fila = [(inicio, [inicio])]
+    visitados = []
+
+    while len(fila) > 0:
+        vertice, caminho = fila.pop(0)
+
+        if vertice == destino:
+            return caminho
+
+        if vertice not in visitados:
+            visitados.append(vertice)
+
+            for item in grafo.get(vertice, []):
+                vizinho = item[0] if isinstance(item, tuple) else item
+                if vizinho not in visitados:
+                    novo_caminho = caminho + [vizinho]
+                    fila.append((vizinho, novo_caminho))
+
+    return []
+
+
 def criar_grafo():
     return {}
 
@@ -191,7 +216,8 @@ def main():
         print("8 - Mostrar grau dos vértices")
         print("9 - Verificar percurso")
         print("10 - Busca em Largura (BFS)")
-        print("11 - Algoritmo de Dijkstra")
+        print("11 - Menor caminho com BFS")
+        print("12 - Algoritmo de Dijkstra")
         print("0 - Sair")
         print("=" * 15)
 
@@ -265,6 +291,19 @@ def main():
                 print(f"Ordem de visitação (BFS): {' -> '.join(resultado)}")
 
         elif opcao == '11':
+            inicio = input("Digite o vértice de origem: ")
+            destino = input("Digite o vértice de destino: ")
+
+            if inicio not in grafo or destino not in grafo:
+                print("Um ou ambos os vértices não existem no grafo.")
+            else:
+                caminho = menor_caminho_bfs(grafo, inicio, destino)
+                if caminho:
+                    print(f"Menor caminho de {inicio} até {destino}: {' -> '.join(caminho)}")
+                else:
+                    print(f"Não existe caminho entre '{inicio}' e '{destino}'.")
+
+        elif opcao == '12':
             inicio = input("Digite o vértice inicial: ")
             destino = input("Digite o vértice de destino: ")
 
